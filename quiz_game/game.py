@@ -171,8 +171,26 @@ class QuizGame:
                 self.console.write(f"  힌트: {quiz.hint}")
 
     def show_best_score(self) -> None:
-        """Show the highest score. Implemented in a later feature commit."""
-        self.console.write("[최고 점수] 기능을 준비 중입니다.")
+        """Show the highest score and recent play history."""
+        if self.state.best_total == 0:
+            self.console.write("아직 퀴즈를 푼 기록이 없습니다.")
+            return
+
+        ratio = self.state.best_score / self.state.best_total
+        self.console.write("\n=== 최고 점수 ===")
+        self.console.write(
+            f"{self.state.best_score}/{self.state.best_total} "
+            f"({ratio:.0%})"
+        )
+
+        if self.state.score_history:
+            self.console.write("\n최근 기록:")
+            recent_history = self.state.score_history[-5:]
+            for record in reversed(recent_history):
+                score = int(record.get("score", 0))
+                total = int(record.get("total", 0))
+                played_at = str(record.get("played_at", "시간 정보 없음"))
+                self.console.write(f"- {played_at}: {score}/{total}")
 
     def shutdown(self) -> None:
         """Save the latest state before the program exits."""

@@ -129,5 +129,38 @@ class QuizListTests(unittest.TestCase):
             self.assertIn("저장된 퀴즈가 없습니다.", io.output)
 
 
+class ScoreDisplayTests(unittest.TestCase):
+    def test_show_best_score_handles_no_play_history(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            io = ScriptedIO([])
+            game = QuizGame(
+                Console(io.input, io.print),
+                StateRepository(Path(directory) / "state.json"),
+            )
+
+            game.show_best_score()
+
+            self.assertIn("아직 퀴즈를 푼 기록이 없습니다.", io.output)
+
+    def test_show_best_score_prints_best_and_recent_history(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            io = ScriptedIO([])
+            game = QuizGame(
+                Console(io.input, io.print),
+                StateRepository(Path(directory) / "state.json"),
+            )
+            game.state.best_score = 4
+            game.state.best_total = 5
+            game.state.score_history = [
+                {"played_at": "2026-08-13T12:00:00", "score": 4, "total": 5}
+            ]
+
+            game.show_best_score()
+
+            rendered = "\n".join(io.output)
+            self.assertIn("4/5 (80%)", rendered)
+            self.assertIn("2026-08-13T12:00:00: 4/5", rendered)
+
+
 if __name__ == "__main__":
     unittest.main()
