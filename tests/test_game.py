@@ -98,5 +98,36 @@ class QuizAddTests(unittest.TestCase):
             self.assertTrue(any("이미 등록" in line for line in io.output))
 
 
+class QuizListTests(unittest.TestCase):
+    def test_list_quizzes_prints_questions_choices_and_answers(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            io = ScriptedIO([])
+            game = QuizGame(
+                Console(io.input, io.print),
+                StateRepository(Path(directory) / "state.json"),
+            )
+
+            game.list_quizzes()
+
+            rendered = "\n".join(io.output)
+            self.assertIn("퀴즈 목록 (7개)", rendered)
+            self.assertIn("Q1.", rendered)
+            self.assertIn("정답:", rendered)
+            self.assertIn("힌트:", rendered)
+
+    def test_list_quizzes_handles_empty_list(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            io = ScriptedIO([])
+            game = QuizGame(
+                Console(io.input, io.print),
+                StateRepository(Path(directory) / "state.json"),
+            )
+            game.quizzes.clear()
+
+            game.list_quizzes()
+
+            self.assertIn("저장된 퀴즈가 없습니다.", io.output)
+
+
 if __name__ == "__main__":
     unittest.main()

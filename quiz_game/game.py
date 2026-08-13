@@ -158,8 +158,17 @@ class QuizGame:
             self.console.write(self.repository.last_message)
 
     def list_quizzes(self) -> None:
-        """List saved quizzes. Implemented in a later feature commit."""
-        self.console.write("[퀴즈 목록] 기능을 준비 중입니다.")
+        """Display every saved quiz and its answer."""
+        if not self.quizzes:
+            self.console.write("저장된 퀴즈가 없습니다.")
+            return
+
+        self.console.write(f"\n=== 퀴즈 목록 ({len(self.quizzes)}개) ===")
+        for number, quiz in enumerate(self.quizzes, start=1):
+            self.console.write(f"\n{quiz.format_question(number)}")
+            self.console.write(f"  정답: {quiz.answer}. {quiz.correct_choice}")
+            if quiz.hint:
+                self.console.write(f"  힌트: {quiz.hint}")
 
     def show_best_score(self) -> None:
         """Show the highest score. Implemented in a later feature commit."""
