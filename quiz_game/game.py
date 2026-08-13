@@ -85,7 +85,7 @@ class QuizGame:
             selected_answer = self.console.read_int("정답 번호 (1~4): ", 1, 4)
             if quiz.is_correct(selected_answer):
                 correct_count += 1
-                self.console.write("정답입니다! ✅")
+                self.console.write("정답입니다! [OK]")
             else:
                 self.console.write(
                     f"오답입니다. 정답은 {quiz.answer}번 "
@@ -121,7 +121,7 @@ class QuizGame:
         if is_better:
             self.state.best_score = score
             self.state.best_total = total
-            self.console.write("새로운 최고 점수입니다! 🏆")
+            self.console.write("새로운 최고 점수입니다! [BEST]")
 
     def add_quiz(self) -> None:
         """Register, validate, and immediately save a new quiz."""
