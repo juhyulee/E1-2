@@ -1,0 +1,2 @@
+"""Console quiz game package."""
+
