@@ -124,8 +124,38 @@ class QuizGame:
             self.console.write("새로운 최고 점수입니다! 🏆")
 
     def add_quiz(self) -> None:
-        """Register a new quiz. Implemented in a later feature commit."""
-        self.console.write("[퀴즈 추가] 기능을 준비 중입니다.")
+        """Register, validate, and immediately save a new quiz."""
+        self.console.write("\n=== 새 퀴즈 추가 ===")
+        question = self.console.read_text("문제: ")
+
+        if any(quiz.question == question for quiz in self.quizzes):
+            self.console.write("같은 문제가 이미 등록되어 있습니다.")
+            return
+
+        choices = [
+            self.console.read_text(f"선택지 {number}: ")
+            for number in range(1, 5)
+        ]
+        answer = self.console.read_int("정답 번호 (1~4): ", 1, 4)
+        hint = self.console.read_text(
+            "힌트 (없으면 Enter): ",
+            allow_empty=True,
+        )
+
+        quiz = Quiz(
+            question=question,
+            choices=choices,
+            answer=answer,
+            hint=hint,
+        )
+        self.quizzes.append(quiz)
+        self.state.quizzes = self.quizzes
+
+        if self.repository.save(self.state):
+            self.console.write(f"퀴즈가 등록되었습니다. (총 {len(self.quizzes)}개)")
+        else:
+            self.quizzes.pop()
+            self.console.write(self.repository.last_message)
 
     def list_quizzes(self) -> None:
         """List saved quizzes. Implemented in a later feature commit."""
