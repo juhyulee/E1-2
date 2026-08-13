@@ -53,6 +53,25 @@ class QuizPlayTests(unittest.TestCase):
 
             self.assertTrue(any("등록된 퀴즈가 없습니다" in line for line in io.output))
 
+    def test_eof_during_menu_saves_and_exits_safely(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            state_path = Path(directory) / "state.json"
+            output: list[str] = []
+
+            def end_of_input(_: str) -> str:
+                raise EOFError
+
+            game = QuizGame(
+                Console(end_of_input, output.append),
+                StateRepository(state_path),
+            )
+
+            game.run()
+
+            self.assertTrue(state_path.exists())
+            self.assertTrue(any("입력이 중단" in line for line in output))
+            self.assertTrue(any("게임을 종료" in line for line in output))
+
 
 class QuizAddTests(unittest.TestCase):
     def test_add_quiz_validates_and_persists_input(self) -> None:

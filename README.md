@@ -1,5 +1,7 @@
 # Python Console Quiz Game
 
+## 프로젝트 개요
+
 Python 기본 문법, 객체 지향 설계, UTF-8 JSON 영속성, Git 브랜치 협업 흐름을 하나의 동작하는 콘솔 프로그램으로 구현한 프로젝트입니다.
 
 프로그램을 실행하면 메뉴에서 퀴즈 풀기·추가·목록·최고 점수 확인·종료를 선택할 수 있습니다. 사용자가 등록한 퀴즈와 점수 기록은 프로젝트 루트의 `state.json`에 저장되어 프로그램을 다시 실행해도 유지됩니다.
@@ -219,7 +221,7 @@ python -m compileall -q main.py quiz_game tests
 - `KeyboardInterrupt`·`EOFError` 변환 검증
 - 퀴즈 풀이·추가·목록·점수 기록 검증
 
-실제 결과는 [테스트 로그](evidence/logs/test-results.txt)에 있습니다.
+실제 결과는 [테스트 로그](evidence/logs/test-results.txt)와 [최종 요구사항 검증 로그](evidence/logs/final-verification.txt)에 있습니다.
 
 ## Git 작업 이력
 

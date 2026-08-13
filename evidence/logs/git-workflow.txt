@@ -27,3 +27,40 @@ $ git log --graph --oneline --decorate --all
 $ git reflog --date=iso --grep-reflog=checkout
 71fa965 HEAD@{2026-08-13 12:58:30 +0900}: checkout: moving from feature/quiz-play to main
 71fa965 HEAD@{2026-08-13 12:57:31 +0900}: checkout: moving from main to feature/quiz-play
+
+# Separate clone workspace practice
+$ git clone https://github.com/juhyulee/E1-2.git work\E1-2-clone-practice
+Cloning into 'work\E1-2-clone-practice'...
+clone exit code: 0
+
+$ git -C work\E1-2-clone-practice status -sb
+## main...origin/main
+
+# README was edited only inside the cloned directory.
+$ git add README.md
+$ git commit -m "docs: complete clone workspace practice"
+[main 360811d] docs: complete clone workspace practice
+ 1 file changed, 4 insertions(+)
+
+$ git push origin main
+To https://github.com/juhyulee/E1-2.git
+   01ceb32..360811d  main -> main
+
+# Back in the original E1-2 working directory
+$ git pull --ff-only origin main
+From https://github.com/juhyulee/E1-2
+ * branch            main       -> FETCH_HEAD
+   01ceb32..360811d  main       -> origin/main
+Updating 01ceb32..360811d
+Fast-forward
+ README.md | 4 ++++
+ 1 file changed, 4 insertions(+)
+pull exit code: 0
+HEAD before pull: 01ceb32
+HEAD after pull: 360811d
+
+$ git rev-list --count HEAD
+15
+
+$ git status -sb
+## main...origin/main
