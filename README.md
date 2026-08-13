@@ -334,3 +334,7 @@ Git은 로컬 변경 이력을 관리하는 도구이고, GitHub는 Git 저장�
 - Git 작성자 이메일은 GitHub noreply 주소를 사용합니다.
 - 상태 파일에는 퀴즈와 점수만 저장합니다.
 - Python 캐시, 가상환경, 임시 파일, 손상 파일 백업은 `.gitignore`에서 제외합니다.
+
+---
+
+Clone/pull 실습 완료: 별도 clone 디렉터리에서 이 문장을 추가하고 `commit → push`한 뒤, 최초 작업 디렉터리에서 `git pull`로 가져왔습니다.
