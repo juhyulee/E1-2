@@ -1,0 +1,29 @@
+# Git workflow evidence (before clone/pull practice)
+$ git remote -v
+origin	https://github.com/juhyulee/E1-2.git (fetch)
+origin	https://github.com/juhyulee/E1-2.git (push)
+$ git branch -avv
+  feature/quiz-play   37e9e87 feat: play randomized quiz sessions
+* main                e066f9c [origin/main: ahead 7] fix: support legacy Windows console encoding
+  remotes/origin/main 71fa965 refactor: connect QuizGame to persistent state
+$ git rev-list --count HEAD
+13
+$ git log --graph --oneline --decorate --all
+* e066f9c (HEAD -> main) fix: support legacy Windows console encoding
+* 156cdb6 test: cover input interruption and state recovery
+* 627cd42 feat: show best score and play history
+* d89456a feat: display saved quiz catalog
+* 84ddd92 feat: add and persist custom quizzes
+*   35c01fb merge: integrate quiz play feature
+|\
+| * 37e9e87 (feature/quiz-play) feat: play randomized quiz sessions
+|/
+* 71fa965 (origin/main) refactor: connect QuizGame to persistent state
+* 03de604 feat: persist game state in UTF-8 JSON
+* 3ab990d feat: add Python fundamentals quiz set
+* 8b590f2 feat: implement validated Quiz model
+* 5fbe807 feat: add validated menu input flow
+* b2fccd4 chore: scaffold quiz game project
+$ git reflog --date=iso --grep-reflog=checkout
+71fa965 HEAD@{2026-08-13 12:58:30 +0900}: checkout: moving from feature/quiz-play to main
+71fa965 HEAD@{2026-08-13 12:57:31 +0900}: checkout: moving from main to feature/quiz-play
