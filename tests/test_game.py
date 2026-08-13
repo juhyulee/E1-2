@@ -1,0 +1,58 @@
+from __future__ import annotations
+
+import tempfile
+import unittest
+from pathlib import Path
+from unittest.mock import patch
+
+from quiz_game.console import Console
+from quiz_game.game import QuizGame
+from quiz_game.storage import StateRepository
+
+
+class ScriptedIO:
+    def __init__(self, answers: list[str]) -> None:
+        self.answers = iter(answers)
+        self.output: list[str] = []
+
+    def input(self, prompt: str) -> str:
+        self.output.append(prompt)
+        return next(self.answers)
+
+    def print(self, message: str) -> None:
+        self.output.append(message)
+
+
+class QuizPlayTests(unittest.TestCase):
+    def test_play_quiz_records_score_and_best_score(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            repository = StateRepository(Path(directory) / "state.json")
+            io = ScriptedIO(["2", "2", "2"])
+            game = QuizGame(Console(io.input, io.print), repository)
+
+            chosen = [game.quizzes[0], game.quizzes[1]]
+            with patch("quiz_game.game.random.sample", return_value=chosen):
+                game.play_quiz()
+
+            self.assertEqual(game.state.best_score, 2)
+            self.assertEqual(game.state.best_total, 2)
+            self.assertEqual(len(game.state.score_history), 1)
+            self.assertTrue((Path(directory) / "state.json").exists())
+            self.assertTrue(any("새로운 최고 점수" in line for line in io.output))
+
+    def test_play_quiz_handles_empty_quiz_list(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            io = ScriptedIO([])
+            game = QuizGame(
+                Console(io.input, io.print),
+                StateRepository(Path(directory) / "state.json"),
+            )
+            game.quizzes.clear()
+
+            game.play_quiz()
+
+            self.assertTrue(any("등록된 퀴즈가 없습니다" in line for line in io.output))
+
+
+if __name__ == "__main__":
+    unittest.main()
