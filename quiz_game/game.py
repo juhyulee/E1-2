@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+import random
+from datetime import datetime
+
 from quiz_game.console import Console, InputAborted
 from quiz_game.models import Quiz
 from quiz_game.storage import GameState, StateRepository
@@ -63,8 +66,62 @@ class QuizGame:
             self.running = False
 
     def play_quiz(self) -> None:
-        """Play a quiz session. Implemented on the feature branch."""
-        self.console.write("[퀴즈 풀기] 기능을 준비 중입니다.")
+        """Play a randomized quiz session and persist its result."""
+        if not self.quizzes:
+            self.console.write("등록된 퀴즈가 없습니다. 먼저 퀴즈를 추가해 주세요.")
+            return
+
+        self.console.write(f"\n현재 퀴즈는 {len(self.quizzes)}개입니다.")
+        question_count = self.console.read_int(
+            f"몇 문제를 풀까요? (1~{len(self.quizzes)}): ",
+            1,
+            len(self.quizzes),
+        )
+        selected_quizzes = random.sample(self.quizzes, question_count)
+        correct_count = 0
+
+        for number, quiz in enumerate(selected_quizzes, start=1):
+            self.console.write(f"\n{quiz.format_question(number)}")
+            selected_answer = self.console.read_int("정답 번호 (1~4): ", 1, 4)
+            if quiz.is_correct(selected_answer):
+                correct_count += 1
+                self.console.write("정답입니다! ✅")
+            else:
+                self.console.write(
+                    f"오답입니다. 정답은 {quiz.answer}번 "
+                    f"'{quiz.correct_choice}'입니다."
+                )
+
+        self.console.write(
+            f"\n결과: {question_count}문제 중 {correct_count}문제 정답 "
+            f"({correct_count / question_count:.0%})"
+        )
+        self._record_score(correct_count, question_count)
+        self.repository.save(self.state)
+
+    def _record_score(self, score: int, total: int) -> None:
+        """Append score history and update the best result when needed."""
+        self.state.score_history.append(
+            {
+                "played_at": datetime.now().isoformat(timespec="seconds"),
+                "score": score,
+                "total": total,
+            }
+        )
+
+        previous_ratio = (
+            self.state.best_score / self.state.best_total
+            if self.state.best_total
+            else -1.0
+        )
+        current_ratio = score / total
+        is_better = current_ratio > previous_ratio or (
+            current_ratio == previous_ratio and score > self.state.best_score
+        )
+        if is_better:
+            self.state.best_score = score
+            self.state.best_total = total
+            self.console.write("새로운 최고 점수입니다! 🏆")
 
     def add_quiz(self) -> None:
         """Register a new quiz. Implemented in a later feature commit."""
@@ -84,4 +141,3 @@ class QuizGame:
         if not self.repository.save(self.state):
             self.console.write(self.repository.last_message)
         self.console.write("게임을 종료합니다. 이용해 주셔서 감사합니다!")
-
