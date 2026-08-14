@@ -1,84 +1,55 @@
 {
   "quizzes": [
     {
-      "question": "Python에서 여러 값을 순서대로 저장하는 가변 자료형은?",
+      "question": "Python에서 여러 값을 순서대로 저장하는 자료형은?",
       "choices": [
-        "tuple",
+        "int",
         "list",
-        "str",
-        "bool"
+        "bool",
+        "str"
       ],
-      "answer": 2,
-      "hint": "대괄호([])를 사용하는 자료형입니다."
+      "answer": 2
     },
     {
-      "question": "조건이 참일 때만 코드를 실행하도록 분기하는 키워드는?",
+      "question": "조건에 따라 코드를 실행할 때 사용하는 키워드는?",
       "choices": [
+        "if",
         "for",
-        "if",
-        "import",
-        "class"
-      ],
-      "answer": 2,
-      "hint": "elif, else와 함께 사용할 수 있습니다."
-    },
-    {
-      "question": "함수를 정의할 때 사용하는 Python 키워드는?",
-      "choices": [
         "def",
-        "func",
-        "function",
-        "return"
+        "import"
       ],
-      "answer": 1,
-      "hint": "define의 앞 세 글자입니다."
+      "answer": 1
     },
     {
-      "question": "키와 값의 쌍으로 데이터를 저장하는 자료형은?",
+      "question": "함수를 정의할 때 사용하는 키워드는?",
+      "choices": [
+        "class",
+        "return",
+        "def",
+        "while"
+      ],
+      "answer": 3
+    },
+    {
+      "question": "키와 값으로 데이터를 저장하는 자료형은?",
       "choices": [
         "list",
-        "set",
         "dict",
-        "int"
+        "tuple",
+        "str"
       ],
-      "answer": 3,
-      "hint": "JSON 객체와 비슷한 중괄호 형태입니다."
+      "answer": 2
     },
     {
-      "question": "클래스로 객체를 만들 때 초기화에 주로 사용하는 메서드는?",
+      "question": "예외 처리를 시작할 때 사용하는 키워드는?",
       "choices": [
-        "__main__",
-        "__init__",
-        "__str__",
-        "__name__"
-      ],
-      "answer": 2,
-      "hint": "객체 생성 직후 속성을 준비합니다."
-    },
-    {
-      "question": "예외가 발생할 수 있는 코드를 감싸는 키워드는?",
-      "choices": [
-        "match",
-        "yield",
         "try",
-        "lambda"
+        "with",
+        "match",
+        "yield"
       ],
-      "answer": 3,
-      "hint": "except와 한 쌍으로 사용합니다."
-    },
-    {
-      "question": "반복 횟수보다 조건을 기준으로 반복할 때 적합한 문장은?",
-      "choices": [
-        "if",
-        "while",
-        "def",
-        "with"
-      ],
-      "answer": 2,
-      "hint": "조건이 참인 동안 반복합니다."
+      "answer": 1
     }
   ],
-  "best_score": 0,
-  "best_total": 0,
-  "score_history": []
+  "best_score": null
 }
