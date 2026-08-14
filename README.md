@@ -51,6 +51,12 @@ python3 main.py
 빈 입력, 문자가 들어간 숫자 입력, 범위를 벗어난 숫자는 다시 입력받습니다.
 `Ctrl+C` 또는 입력 종료가 발생하면 가능한 데이터를 저장한 뒤 안전하게 종료합니다.
 
+## 실행 화면
+
+<img width="247" height="102" alt="실행 환경 화면" src="https://github.com/user-attachments/assets/3db58176-cc26-44ef-ae12-88ce68aa539f" />
+
+<img width="440" height="414" alt="퀴즈 실행 화면" src="https://github.com/user-attachments/assets/90550a18-41cc-49cb-ac28-114318543013" />
+
 ## 파일 구조
 
 ```text
