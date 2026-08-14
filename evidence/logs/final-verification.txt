@@ -1,9 +1,0 @@
-$ python scripts/verify_project.py
-PASS state: 7 quizzes and valid schema
-PASS README: required sections and relative links
-PASS Git: 15 commits and quiz feature merge
-PASS security: no common credential signatures
-OVERALL: PASS
-verification exit code: 0
-$ git diff --cached --check
-diff check exit code: 0
