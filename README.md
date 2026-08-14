@@ -47,6 +47,11 @@ py main.py
 
 [실제 전체 실행 로그](evidence/logs/sample-session.txt)에서 빈 입력, 문자 입력, 범위 초과, 퀴즈 풀이, 점수 확인, 종료 흐름을 확인할 수 있습니다.
 
+##스크린샷
+<img width="247" height="102" alt="image" src="https://github.com/user-attachments/assets/3db58176-cc26-44ef-ae12-88ce68aa539f" />
+<img width="440" height="414" alt="image" src="https://github.com/user-attachments/assets/90550a18-41cc-49cb-ac28-114318543013" />
+
+
 ## 기능 목록
 
 ### 메뉴와 안전한 입력
